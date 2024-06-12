@@ -1,8 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/home_screen';
-import HotelScreen from '../screens/hotel_screen';
-import ReserveScreen from '../screens/reserve_screen';
+import HotelStack from '../screens/hotel_stack';
+import ReserveStack from '../screens/reserve_stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Tab = createBottomTabNavigator();
@@ -20,18 +20,22 @@ function MyTabs() {
                     ),
                 }}
             />
-            <Tab.Screen name="Hotels"
-                component={HotelScreen}
+            <Tab.Screen
+                name="Hotels"
+                component={HotelStack}
                 options={{
-                    tabBarLabel: 'Hotels',
+                    headerShown: false,
+                    tabBarLabel: 'Hotéis',
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="bed" color={color} size={size} />
                     ),
                 }}
             />
-            <Tab.Screen name="Reserve"
-                component={ReserveScreen}
+            <Tab.Screen
+                name="Reservas"
+                component={ReserveStack}
                 options={{
+                    headerShown: false,
                     tabBarLabel: "Reservas",
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="calendar" color={color} size={size} />
