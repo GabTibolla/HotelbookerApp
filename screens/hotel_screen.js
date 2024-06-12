@@ -1,11 +1,11 @@
 import { View, Text } from 'react-native';
 
-function SettingsScreen() {
+function HotelScreen() {
     return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-            <Text>Settings!</Text>
+            <Text>Hotels!</Text>
         </View>
     );
 }
 
-export default SettingsScreen;
+export default HotelScreen;

@@ -1,9 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/home_screen';
-import SettingsScreen from '../screens/settings_screen';
+import HotelScreen from '../screens/hotel_screen';
 import ReserveScreen from '../screens/reserve_screen';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -22,18 +20,24 @@ function MyTabs() {
                     ),
                 }}
             />
-            <Tab.Screen name="Settings" component={SettingsScreen} options={{
-                tabBarLabel: 'Hotels',
-                tabBarIcon: ({ color, size }) => (
-                    <MaterialCommunityIcons name="bed" color={color} size={size} />
-                ),
-            }}/>
-            <Tab.Screen name="Reserve" component={ReserveScreen} options={{
-                tabBarLabel: 'Reservas',
-                tabBarIcon: ({ color, size }) => (
-                    <MaterialCommunityIcons name="calendar" color={color} size={size} />
-                ),
-            }}/>
+            <Tab.Screen name="Hotels"
+                component={HotelScreen}
+                options={{
+                    tabBarLabel: 'Hotels',
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons name="bed" color={color} size={size} />
+                    ),
+                }}
+            />
+            <Tab.Screen name="Reserve"
+                component={ReserveScreen}
+                options={{
+                    tabBarLabel: "Reservas",
+                    tabBarIcon: ({ color, size }) => (
+                        <MaterialCommunityIcons name="calendar" color={color} size={size} />
+                    ),
+                }}
+            />
         </Tab.Navigator>
     );
 }
