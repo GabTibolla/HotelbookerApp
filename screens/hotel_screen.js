@@ -1,35 +1,36 @@
-import React from 'react';
-import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 function HotelScreen() {
     const navigation = useNavigation();
+    const [hotels, setHotels] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const hotels = [
-        {
-            name: 'João Silva',
-            email: "104",
-            address: '2024-06-15',
-            image: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/1a/ea/54/hotel-presidente-4s.jpg?w=1200&h=-1&s=1',
-            country: "BR",
-            state: "RS",
-            created_at: "2022-06-15"
-        },
-        {
-            name: 'Maria Santos',
-            email: "201",
-            address: '2024-06-21',
-            image: 'https://www.cnnbrasil.com.br/viagemegastronomia/wp-content/uploads/sites/5/2021/05/colline-de-france.jpeg?w=1200&h=674&crop=1',
-            country: "BR",
-            state: "RS",
-            created_at: "2022-06-15"
-        },
-        // Adicione mais dados conforme necessário
-    ];
+    useEffect(() => {
+        fetch( 'http://192.168.100.7:8080/hotels')
+            .then(response => response.json())
+            .then(data => {
+                setHotels(data.result); // Supondo que a API retorne um array de hotéis
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error('Erro ao buscar os dados:', error);
+                setLoading(false);
+            });
+    }, []);
 
-    const handleNavigateToDetail = (hotel) => {
-        navigation.navigate('Quartos', { hotel });
+    const handleNavigateToDetail = (idHotel) => {
+        navigation.navigate('Quartos', { idHotel });
     };
+
+    if (loading) {
+        return (
+            <View style={styles.loadingContainer}>
+                <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+        );
+    }
 
     return (
         <View style={styles.container}>
@@ -37,13 +38,13 @@ function HotelScreen() {
                 data={hotels}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => (
-                    <TouchableOpacity onPress={() => handleNavigateToDetail(item)}>
+                    <TouchableOpacity onPress={() => handleNavigateToDetail(item.id)}>
                         <View style={styles.card}>
                             <Image source={{ uri: item.image }} style={styles.cardImage} />
                             <View style={styles.cardContent}>
-                                <Text style={styles.cardText}>Hotel {item.name}</Text>
-                                <Text style={styles.cardText}>Quarto: {item.email}</Text>
-                                <Text style={styles.cardText}>Check-in: {item.address}</Text>
+                                <Text style={styles.cardText}>{item.name}</Text>
+                                <Text style={styles.cardText}>E-mail: {item.email}</Text>
+                                <Text style={styles.cardText}>{item.address}</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
@@ -72,9 +73,9 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     cardImage: {
-        width: 120, // aumente o tamanho da imagem
-        height: 120, // aumente o tamanho da imagem
-        borderRadius: 10, // ajuste o raio do border radius para se adequar ao novo tamanho da imagem
+        width: 120,
+        height: 120,
+        borderRadius: 10,
         marginRight: 15,
     },
     cardContent: {
@@ -85,6 +86,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#333',
         marginBottom: 5,
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 
