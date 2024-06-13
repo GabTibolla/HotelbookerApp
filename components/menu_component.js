@@ -11,10 +11,10 @@ function MyTabs() {
     return (
         <Tab.Navigator>
             <Tab.Screen
-                name="Feed"
+                name="Destaques"
                 component={HomeScreen}
                 options={{
-                    tabBarLabel: 'Home',
+                    tabBarLabel: 'Destaques',
                     tabBarIcon: ({ color, size }) => (
                         <MaterialCommunityIcons name="home" color={color} size={size} />
                     ),
