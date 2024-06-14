@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useToken} from '../utils/token_context';
-import {View, Text, StyleSheet, Button, Image, ScrollView, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, ActivityIndicator} from 'react-native';
 
 function QuartosScreen({ route, navigation }) {
     const { idHotel } = route.params;

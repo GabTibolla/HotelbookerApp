@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useToken } from "../utils/token_context";
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 
 function LoginScreen({ navigation }) {
     const [username, setUsername] = useState('');
