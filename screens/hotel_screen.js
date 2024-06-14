@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import {useToken} from '../utils/token_context';
 
 function HotelScreen() {
     const navigation = useNavigation();
     const [hotels, setHotels] = useState([]);
     const [loading, setLoading] = useState(true);
+    const { token } = useToken();
+
+    console.log(`teste de token:`, token);
 
     useEffect(() => {
-        fetch( 'http://192.168.100.7:8080/hotels')
+        fetch( 'http://192.168.100.7:8080/hotels',
+            {headers: {
+                'Authorization': `Bearer ${token}`,
+                }
+            })
+
             .then(response => response.json())
             .then(data => {
                 setHotels(data.result); // Supondo que a API retorne um array de hotéis

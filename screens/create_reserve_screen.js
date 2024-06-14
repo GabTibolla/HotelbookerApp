@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, ScrollView, Alert, TouchableOpacity, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useToken} from '../utils/token_context';
 
 function CreateReserveScreen({ route, navigation }) {
     const { idHotel, idQuarto } = route.params;
@@ -13,6 +14,7 @@ function CreateReserveScreen({ route, navigation }) {
     const [checkOutDate, setCheckOutDate] = useState(new Date());
     const [showCheckInPicker, setShowCheckInPicker] = useState(false);
     const [showCheckOutPicker, setShowCheckOutPicker] = useState(false);
+    const { token } = useToken();
 
     const handleReserve = () => {
         const data = {
@@ -32,13 +34,21 @@ function CreateReserveScreen({ route, navigation }) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+
             },
             body: JSON.stringify(data),
         })
             .then(response => response.json())
             .then(result => {
-                Alert.alert(result.message);
-                navigation.goBack();
+                if (result.ok) {
+                    Alert.alert("Sucesso", "A reserva foi realizada com sucesso!");
+                    navigation.goBack();
+                }else{
+                    Alert.alert("Error", result.message);
+                }
+
+
             })
             .catch(error => {
                 Alert.alert('Erro ao fazer a reserva. Tente novamente.', error.toString());
