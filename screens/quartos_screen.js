@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import {useToken} from '../utils/token_context';
 import {View, Text, StyleSheet, Button, Image, ScrollView, TouchableOpacity, ActivityIndicator} from 'react-native';
 
 function QuartosScreen({ route, navigation }) {
@@ -6,10 +7,15 @@ function QuartosScreen({ route, navigation }) {
 
     const [quartos, setQuartos] = useState([]);
     const [loading, setLoading] = useState(true);
+    const { token } = useToken();
 
 
     useEffect(() => {
-        fetch( `http://192.168.100.7:8080/hotels/${idHotel}/rooms`, {})
+        fetch( `http://192.168.100.7:8080/hotels/${idHotel}/rooms`,
+            {headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            })
             .then(response => response.json())
             .then(data => {
                 setQuartos(data.result);
