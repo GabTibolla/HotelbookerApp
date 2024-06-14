@@ -9,8 +9,6 @@ function HotelScreen() {
     const [loading, setLoading] = useState(true);
     const { token } = useToken();
 
-    console.log(`teste de token:`, token);
-
     useEffect(() => {
         fetch( 'http://192.168.100.7:8080/hotels',
             {headers: {

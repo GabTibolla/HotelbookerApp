@@ -23,7 +23,6 @@ function LoginScreen({ navigation }) {
             if (response.ok) {
                 const data = await response.json();
                 const token = data.token;
-                console.log(token);
                 setToken(token); // Armazena o token no contexto
 
                 navigation.replace('Main');
