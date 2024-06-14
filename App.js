@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LoginScreen from './screens/login_screen';
 import MyTabs from './components/menu_component';
 import {TokenProvider} from "./utils/token_context";
+import SignUpScreen from "./screens/signup_screen";
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,11 @@ function AuthNavigator() {
                 component={MyTabs}
                 options={{ headerShown: false }}
             />
+            <Stack.Screen
+            name="SignUp"
+            component={SignUpScreen}
+            options={{ headerShown: false }}
+        />
         </Stack.Navigator>
     );
 }
