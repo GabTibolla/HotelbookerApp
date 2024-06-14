@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { useToken } from "../utils/token_context";
+import { useToken, useRole } from "../utils/token_context";
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 
 function LoginScreen({ navigation }) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const {setToken} = useToken();
+    const { setToken } = useToken();
+    const { setRole } = useRole();
 
     const handleLogin = async () => {
         try {
@@ -23,7 +24,8 @@ function LoginScreen({ navigation }) {
             if (response.ok) {
                 const data = await response.json();
                 const token = data.token;
-                setToken(token); // Armazena o token no contexto
+                setToken(token);
+                setRole(data.role);
 
                 navigation.replace('Main');
             } else {
@@ -33,6 +35,11 @@ function LoginScreen({ navigation }) {
             console.error(error);
             Alert.alert('Erro', 'Algo deu errado. Tente novamente mais tarde.');
         }
+    };
+
+    const handleSignUp = () => {
+        // Navegar para a tela de cadastro ou outra tela relacionada
+        navigation.navigate('SignUp'); // Substitua 'SignUp' pelo nome da sua tela de cadastro
     };
 
     return (
@@ -56,6 +63,9 @@ function LoginScreen({ navigation }) {
             />
             <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
                 <Text style={styles.loginButtonText}>Entrar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
+                <Text style={styles.signUpButtonText}>Não tem cadastro? Cadastre-se</Text>
             </TouchableOpacity>
         </View>
     );
@@ -98,6 +108,14 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         color: '#fff',
+    },
+    signUpButton: {
+        marginTop: 16,
+    },
+    signUpButtonText: {
+        fontSize: 16,
+        color: '#7f8bc8',
+        textDecorationLine: 'underline',
     },
 });
 
