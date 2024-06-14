@@ -3,6 +3,7 @@ import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, ActivityIndi
 import { useNavigation } from '@react-navigation/native';
 import {useToken} from '../utils/token_context';
 
+
 function HotelScreen() {
     const navigation = useNavigation();
     const [hotels, setHotels] = useState([]);
@@ -18,7 +19,7 @@ function HotelScreen() {
 
             .then(response => response.json())
             .then(data => {
-                setHotels(data.result); // Supondo que a API retorne um array de hotéis
+                setHotels(data.result);
                 setLoading(false);
             })
             .catch(error => {
