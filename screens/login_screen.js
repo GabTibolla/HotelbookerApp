@@ -38,7 +38,7 @@ function LoginScreen({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Bem-vindo de volta!</Text>
+            <Text style={styles.title}>Login</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Usuário"
