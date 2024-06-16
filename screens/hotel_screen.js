@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {useToken} from '../utils/token_context';
+import {getBaseURL} from "../utils/url_config";
 
 
 function HotelScreen() {
@@ -10,8 +11,10 @@ function HotelScreen() {
     const [loading, setLoading] = useState(true);
     const { token } = useToken();
 
+    const url = getBaseURL();
+
     useEffect(() => {
-        fetch( 'http://192.168.100.7:8080/hotels',
+        fetch( `${url}/hotels`,
             {headers: {
                 'Authorization': `Bearer ${token}`,
                 }

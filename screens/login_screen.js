@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useToken, useRole } from "../utils/token_context";
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import {getBaseURL} from "../utils/url_config";
 
 function LoginScreen({ navigation }) {
     const [username, setUsername] = useState('');
@@ -10,7 +11,8 @@ function LoginScreen({ navigation }) {
 
     const handleLogin = async () => {
         try {
-            const response = await fetch('http://192.168.100.7:8080/auth/login', {
+            const url = getBaseURL();
+            const response = await fetch(`${url}/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

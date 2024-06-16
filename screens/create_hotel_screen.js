@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, Button } from 'react-native';
 import RadioButtonGroup, { RadioButtonItem } from 'expo-radio-button';
+import {getBaseURL} from "../utils/url_config";
 
 function CreateHotelScreen({ navigation }) {
     const [role, setRole] = useState('User');
@@ -25,7 +26,8 @@ function CreateHotelScreen({ navigation }) {
         };
 
         try {
-            const response = await fetch('http://192.168.100.7:8080/auth/register', {
+            const url = getBaseURL();
+            const response = await fetch(`${url}/auth/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

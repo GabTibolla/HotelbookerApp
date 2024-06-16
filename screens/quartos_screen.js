@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useToken} from '../utils/token_context';
 import {View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {getBaseURL} from "../utils/url_config";
 
 function QuartosScreen({ route, navigation }) {
     const { idHotel } = route.params;
@@ -9,9 +10,9 @@ function QuartosScreen({ route, navigation }) {
     const [loading, setLoading] = useState(true);
     const { token } = useToken();
 
-
+    const url = getBaseURL();
     useEffect(() => {
-        fetch( `http://192.168.100.7:8080/hotels/${idHotel}/rooms`,
+        fetch( `${url}/hotels/${idHotel}/rooms`,
             {headers: {
                     'Authorization': `Bearer ${token}`,
                 }

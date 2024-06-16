@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TextInput, Button, ScrollView, Alert, Touchable
 import DateTimePicker from '@react-native-community/datetimepicker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useToken} from '../utils/token_context';
+import {getBaseURL} from "../utils/url_config";
 
 function CreateReserveScreen({ route, navigation }) {
     const { idHotel, idQuarto } = route.params;
@@ -30,7 +31,9 @@ function CreateReserveScreen({ route, navigation }) {
             return;
         }
 
-        fetch(`http://192.168.100.7:8080/hotels/${idHotel}/rooms/${idQuarto}/reserve`, {
+        const url = getBaseURL();
+
+        fetch(`${url}/hotels/${idHotel}/rooms/${idQuarto}/reserve`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
