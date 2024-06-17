@@ -4,10 +4,17 @@ import HomeScreen from '../screens/home_screen';
 import HotelStack from '../screens/hotel_stack';
 import ReserveStack from '../screens/reserve_stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {useRole} from "../utils/token_context";
+import  VectorIcons  from 'react-native-vector-icons/FontAwesome5';
+import MyHotelsScreen from "../screens/my_hotels_screen";
+import MyHotelsStack from "../screens/my_hotels_stack";
 
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
+    const { role } = useRole();
+
+
     return (
         <Tab.Navigator>
             <Tab.Screen
@@ -20,6 +27,7 @@ function MyTabs() {
                     ),
                 }}
             />
+            {role === "USER" ? (
             <Tab.Screen
                 name="Hotels"
                 component={HotelStack}
@@ -30,7 +38,8 @@ function MyTabs() {
                         <MaterialCommunityIcons name="bed" color={color} size={size} />
                     ),
                 }}
-            />
+            />): null}
+            {role === "USER" ? (
             <Tab.Screen
                 name="Reservas"
                 component={ReserveStack}
@@ -41,7 +50,20 @@ function MyTabs() {
                         <MaterialCommunityIcons name="calendar" color={color} size={size} />
                     ),
                 }}
-            />
+            /> ): null}
+            {role === "ADMIN" ? (
+                <Tab.Screen
+                    name="Meus Hotéis"
+                    component={MyHotelsStack}
+                    options={{
+                        headerShown: false,
+                        tabBarLabel: "Meus Hotéis",
+                        tabBarIcon: ({ color, size }) => (
+                            <VectorIcons name={"hotel"} color={color} size={size} />
+                        ),
+                    }}
+                />
+            ) : null}
         </Tab.Navigator>
     );
 }
