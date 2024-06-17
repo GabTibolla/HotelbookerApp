@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, Button } from 'react-native';
 import RadioButtonGroup, { RadioButtonItem } from 'expo-radio-button';
 import {getBaseURL} from "../utils/url_config";
+import {useToken} from "../utils/token_context";
 
 function CreateHotelScreen({ navigation }) {
-    const [role, setRole] = useState('User');
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [telephone, setTelephone] = useState('');
@@ -12,32 +12,34 @@ function CreateHotelScreen({ navigation }) {
     const [state, setState] = useState('');
     const [country, setCountry] = useState('');
     const [image, setImage] = useState('');
+    const { token } = useToken();
 
     const handleSignUp = async () => {
-        const userData = {
-            role,
-            name,
-            address,
-            telephone,
-            email,
-            state,
-            country,
-            image,
-        };
-
         try {
             const url = getBaseURL();
-            const response = await fetch(`${url}/auth/register`, {
+
+            console.log(url);
+
+            const response = await fetch(`${url}/hotels`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
-                body: JSON.stringify(userData),
+                body: JSON.stringify({
+                    name :name,
+                    address :address,
+                    telephone :telephone,
+                    email :email,
+                    state : state,
+                    country:country,
+                    image: image,
+                }),
             });
 
             if (response.ok) {
                 Alert.alert('Sucesso', 'Cadastro realizado com sucesso');
-                navigation.navigate('Login');
+                navigation.goBack();
             } else {
                 Alert.alert('Erro', 'Falha no cadastro. Verifique os dados e tente novamente.');
             }
@@ -49,16 +51,7 @@ function CreateHotelScreen({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Cadastro</Text>
-            <RadioButtonGroup
-                containerStyle={styles.radioGroup}
-                selected={role}
-                onSelected={(value) => setRole(value)}
-                radioBackground="blue"
-            >
-                <RadioButtonItem value="User" label="Usuário" />
-                <RadioButtonItem value="HotelOwner" label="Dono de Hotel" />
-            </RadioButtonGroup>
+            <Text style={styles.title}>Cadastro de Hotel</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Nome"
