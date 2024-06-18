@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, Button } from 'react-native';
 import RadioButtonGroup, { RadioButtonItem } from 'expo-radio-button';
 import {getBaseURL} from "../utils/url_config";
-import {useToken} from "../utils/token_context";
+import {useToken, useId} from "../utils/token_context";
 
 function CreateHotelScreen({ navigation }) {
     const [name, setName] = useState('');
@@ -13,14 +13,15 @@ function CreateHotelScreen({ navigation }) {
     const [country, setCountry] = useState('');
     const [image, setImage] = useState('');
     const { token } = useToken();
+    const { id } = useId();
 
     const handleSignUp = async () => {
         try {
             const url = getBaseURL();
 
-            console.log(url);
 
-            const response = await fetch(`${url}/hotels`, {
+
+            const response = await fetch(`${url}/hotels/${id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

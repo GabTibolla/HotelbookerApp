@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useToken, useRole } from "../utils/token_context";
+import { useToken, useRole, useId } from "../utils/token_context";
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import {getBaseURL} from "../utils/url_config";
 
@@ -8,6 +8,7 @@ function LoginScreen({ navigation }) {
     const [password, setPassword] = useState('');
     const { setToken } = useToken();
     const { setRole } = useRole();
+    const { setId } = useId();
 
     const handleLogin = async () => {
         try {
@@ -28,6 +29,9 @@ function LoginScreen({ navigation }) {
                 const token = data.token;
                 setToken(token);
                 setRole(data.role);
+                setId(data.id);
+
+                console.log(data.id);
 
                 navigation.replace('Main');
             } else {
