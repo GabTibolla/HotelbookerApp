@@ -17,6 +17,7 @@ function MyTabs() {
 
     return (
         <Tab.Navigator>
+            {role === "USER" ? (
             <Tab.Screen
                 name="Destaques"
                 component={HomeScreen}
@@ -26,7 +27,18 @@ function MyTabs() {
                         <MaterialCommunityIcons name="home" color={color} size={size} />
                     ),
                 }}
-            />
+            />):
+                <Tab.Screen
+                    name="Estatísicas"
+                    component={HomeScreen}
+                    options={{
+                        tabBarLabel: 'Estatísticas',
+                        tabBarIcon: ({ color, size }) => (
+                            <MaterialCommunityIcons name="home" color={color} size={size} />
+                        ),
+                    }}
+                />
+            }
             {role === "USER" ? (
             <Tab.Screen
                 name="Hotels"
@@ -53,11 +65,11 @@ function MyTabs() {
             /> ): null}
             {role === "ADMIN" ? (
                 <Tab.Screen
-                    name="Meus Hotéis"
+                    name="Meu Hotel"
                     component={MyHotelsStack}
                     options={{
                         headerShown: false,
-                        tabBarLabel: "Meus Hotéis",
+                        tabBarLabel: "Meu Hotel",
                         tabBarIcon: ({ color, size }) => (
                             <VectorIcons name={"hotel"} color={color} size={size} />
                         ),
