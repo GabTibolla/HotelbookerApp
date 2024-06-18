@@ -6,7 +6,6 @@ import ReserveStack from '../screens/reserve_stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {useRole} from "../utils/token_context";
 import  VectorIcons  from 'react-native-vector-icons/FontAwesome5';
-import MyHotelsScreen from "../screens/my_hotels_screen";
 import MyHotelsStack from "../screens/my_hotels_stack";
 
 const Tab = createBottomTabNavigator();

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, Button } from 'react-native';
-import RadioButtonGroup, { RadioButtonItem } from 'expo-radio-button';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import {getBaseURL} from "../utils/url_config";
 import {useToken, useId} from "../utils/token_context";
 

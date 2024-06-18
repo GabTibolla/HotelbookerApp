@@ -5,11 +5,7 @@ import {
     Text,
     StyleSheet,
     Image,
-    ScrollView,
-    TouchableOpacity,
     ActivityIndicator,
-    FlatList,
-    Button
 } from 'react-native';
 import {getBaseURL} from "../utils/url_config";
 
@@ -37,11 +33,6 @@ function DetailMyHotelScreen({ route, navigation }) {
                 setLoading(false);
             });
     }, []);
-
-    const handleNavigateToDetail = (idQuarto) => {
-        navigation.navigate('Fazer Reserva', { idHotel, idQuarto });
-    };
-
 
     if (loading) {
         return (

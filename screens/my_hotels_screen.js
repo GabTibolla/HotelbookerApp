@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import { View, Text, FlatList, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/Ionicons';
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useToken, useId } from "../utils/token_context";
 import {getBaseURL} from "../utils/url_config";
 
