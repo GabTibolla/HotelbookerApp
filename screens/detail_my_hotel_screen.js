@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {getBaseURL} from "../utils/url_config";
 
-function DetailMyHotelScreen({ route, navigation }) {
+function DetailMyHotelScreen({ route }) {
     const { idHotel } = route.params;
 
     const [hotel, setHotel] = useState([]);
