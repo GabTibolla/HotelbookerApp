@@ -1,46 +1,39 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { getBaseURL } from '../utils/url_config';
 import { useToken, useId } from '../utils/token_context';
 
-function CreateHotelScreen({ route, navigation }) {
+function EditRoomScreen({ route, navigation }) {
     const [name, setName] = useState('');
-    const [address, setAddress] = useState('');
-    const [telephone, setTelephone] = useState('');
-    const [email, setEmail] = useState('');
-    const [state, setState] = useState('');
-    const [country, setCountry] = useState('');
+    const [type, setType] = useState('');
+    const [dailyPrice, setDailyPrice] = useState(null);
     const [image, setImage] = useState('');
-    const { token } = useToken();
-    const { id } = useId();
-    const { onCreate } = route.params;
 
-    const handleSignUp = async () => {
+    const { token } = useToken();
+    const { idHotel, idQuarto } = route.params;
+
+    const handleEditRoom = async () => {
         try {
             const url = getBaseURL();
-            const response = await fetch(`${url}/hotels/${id}`, {
-                method: 'POST',
+            const response = await fetch(`${url}/hotels/${idHotel}/rooms/${idQuarto}`, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify({
                     name,
-                    address,
-                    telephone,
-                    email,
-                    state,
-                    country,
+                    type,
+                    dailyPrice,
                     image,
                 }),
             });
 
             if (response.ok) {
-                Alert.alert('Sucesso', 'Cadastro realizado com sucesso');
-                if (onCreate) onCreate();
+                Alert.alert('Sucesso', 'Cadastro atualizado com sucesso');
                 navigation.goBack();
             } else {
-                Alert.alert('Erro', 'Falha no cadastro. Verifique os dados e tente novamente.');
+                Alert.alert('Erro', 'Falha na atualização. Verifique os dados e tente novamente.');
             }
         } catch (error) {
             console.error(error);
@@ -48,9 +41,30 @@ function CreateHotelScreen({ route, navigation }) {
         }
     };
 
+    const url = getBaseURL();
+
+    useEffect(() => {
+        fetch(`${url}/hotels/${idHotel}/rooms/${idQuarto}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setName(data.name);
+                setType(data.type);
+                setImage(data.image);
+                setDailyPrice(data.dailyPrice.toString());
+            })
+            .catch(error => {
+                console.error('Erro ao buscar os dados:', error);
+            });
+    }, []);
+
+
     return (
         <ScrollView style={styles.container}>
-            <Text style={styles.title}>Cadastro de Hotel</Text>
+            <Text style={styles.title}>Editar Quarto</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Nome"
@@ -60,39 +74,17 @@ function CreateHotelScreen({ route, navigation }) {
             />
             <TextInput
                 style={styles.input}
-                placeholder="Endereço"
+                placeholder="Tipo"
                 placeholderTextColor="#aaa"
-                value={address}
-                onChangeText={setAddress}
+                value={type}
+                onChangeText={setType}
             />
             <TextInput
                 style={styles.input}
-                placeholder="Telefone"
+                placeholder="Valor Diária"
                 placeholderTextColor="#aaa"
-                value={telephone}
-                onChangeText={setTelephone}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Email"
-                placeholderTextColor="#aaa"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Estado"
-                placeholderTextColor="#aaa"
-                value={state}
-                onChangeText={setState}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="País"
-                placeholderTextColor="#aaa"
-                value={country}
-                onChangeText={setCountry}
+                value={dailyPrice}
+                onChangeText={setDailyPrice}
             />
             <TextInput
                 style={styles.input}
@@ -101,8 +93,8 @@ function CreateHotelScreen({ route, navigation }) {
                 value={image}
                 onChangeText={setImage}
             />
-            <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
-                <Text style={styles.signUpButtonText}>Cadastrar</Text>
+            <TouchableOpacity style={styles.createButton} onPress={handleEditRoom}>
+                <Text style={styles.createButtonText}>Editar</Text>
             </TouchableOpacity>
         </ScrollView>
     );
@@ -132,7 +124,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#333',
     },
-    signUpButton: {
+    createButton: {
         width: '100%',
         backgroundColor: '#3f51b5',
         paddingVertical: 16,
@@ -140,11 +132,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 24,
     },
-    signUpButtonText: {
+    createButtonText: {
         fontSize: 18,
         fontWeight: 'bold',
         color: '#fff',
     },
 });
 
-export default CreateHotelScreen;
+export default EditRoomScreen;

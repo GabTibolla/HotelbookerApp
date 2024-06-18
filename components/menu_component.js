@@ -4,6 +4,7 @@ import HomeScreen from '../screens/home_screen';
 import HotelStack from '../screens/hotel_stack';
 import ReserveStack from '../screens/reserve_stack';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useRole} from "../utils/token_context";
 import  VectorIcons  from 'react-native-vector-icons/FontAwesome5';
 import MyHotelsStack from "../screens/my_hotels_stack";
@@ -33,7 +34,7 @@ function MyTabs() {
                     options={{
                         tabBarLabel: 'Estatísticas',
                         tabBarIcon: ({ color, size }) => (
-                            <MaterialCommunityIcons name="home" color={color} size={size} />
+                            <MaterialIcons name="insert-chart" color={color} size={size} />
                         ),
                     }}
                 />

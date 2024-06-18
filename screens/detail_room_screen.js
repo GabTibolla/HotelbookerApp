@@ -6,25 +6,25 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { getBaseURL } from "../utils/url_config";
 import {useFocusEffect} from "@react-navigation/native";
 
-function DetailMyHotelScreen({ route, navigation }) {
-    const { idHotel } = route.params;
+function DetailRoomScreen({ route, navigation }) {
+    const { idHotel, idQuarto } = route.params;
 
-    const [hotel, setHotel] = useState({});
+    const [quarto, setQuarto] = useState({});
     const [loading, setLoading] = useState(true);
     const { token } = useToken();
 
     const url = getBaseURL();
     useFocusEffect(
         useCallback(() => {
-            const fetchHotels = async () => {
+            const fetchRooms = async () => {
                 try {
-                    const response = await fetch(`${url}/hotels/${idHotel}`, {
+                    const response = await fetch(`${url}/hotels/${idHotel}/rooms/${idQuarto}`, {
                         headers: {
                             'Authorization': `Bearer ${token}`,
                         },
                     });
                     const data = await response.json();
-                    setHotel(data);
+                    setQuarto(data);
                     setLoading(false);
                 } catch (error) {
                     console.error('Erro ao buscar os dados:', error);
@@ -32,33 +32,27 @@ function DetailMyHotelScreen({ route, navigation }) {
                 }
             };
 
-            fetchHotels();
+            fetchRooms();
         }, [url, token, navigation])
     );
 
-
-
     const handleEditHotel = () => {
-        navigation.navigate('Editar Hotel', { idHotel });
-    };
-
-    const handleManageRooms = () => {
-        navigation.navigate('Gerenciar Quartos', { idHotel });
+        navigation.navigate('Editar Quarto', { idHotel, idQuarto });
     };
 
     const handleDeleteHotel = () => {
         Alert.alert(
             'Confirmar Exclusão',
-            'Tem certeza que deseja excluir este hotel?',
+            'Tem certeza que deseja excluir este quarto?',
             [
                 { text: 'Cancelar', style: 'cancel' },
-                { text: 'Confirmar', onPress: () => confirmDeleteHotel() }
+                { text: 'Confirmar', onPress: () => confirmDeleteRoom() }
             ]
         );
     };
 
-    const confirmDeleteHotel = () => {
-        fetch(`${url}/hotels/${idHotel}`, {
+    const confirmDeleteRoom = () => {
+        fetch(`${url}/hotels/${idHotel}/rooms/${idQuarto}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -89,20 +83,15 @@ function DetailMyHotelScreen({ route, navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.card}>
-                <Image source={{ uri: hotel.image }} style={styles.cardImage} />
-                <Text style={styles.title}>{hotel.name}</Text>
-                <Text style={styles.detailText}>Endereço: {hotel.address}</Text>
-                <Text style={styles.detailText}>Telefone: {hotel.telephone}</Text>
-                <Text style={styles.detailText}>Email: {hotel.email}</Text>
+                <Image source={{ uri: quarto.image }} style={styles.cardImage} />
+                <Text style={styles.title}>{quarto.name}</Text>
+                <Text style={styles.detailText}>Tipo: {quarto.type}</Text>
+                <Text style={styles.detailText}>Valor (Diária): R$ {quarto.dailyPrice}</Text>
             </View>
             <View style={styles.iconContainer}>
                 <TouchableOpacity onPress={handleEditHotel} style={styles.iconButton}>
                     <Icon name="edit" size={30} color="#000" />
                     <Text style={styles.iconText}>Editar</Text>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleManageRooms} style={styles.iconButton}>
-                    <MaterialIcons name="room-preferences" size={30} color="#000" />
-                    <Text style={styles.iconText}>Gerenciar Quartos</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={handleDeleteHotel} style={styles.iconButton}>
                     <Icon name="trash" size={30} color="#000" />
@@ -160,4 +149,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default DetailMyHotelScreen;
+export default DetailRoomScreen;

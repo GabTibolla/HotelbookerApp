@@ -3,22 +3,20 @@ import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, ScrollView 
 import { getBaseURL } from '../utils/url_config';
 import { useToken, useId } from '../utils/token_context';
 
-function CreateHotelScreen({ route, navigation }) {
+function CreateRoomScreen({ route, navigation }) {
     const [name, setName] = useState('');
-    const [address, setAddress] = useState('');
-    const [telephone, setTelephone] = useState('');
-    const [email, setEmail] = useState('');
-    const [state, setState] = useState('');
-    const [country, setCountry] = useState('');
+    const [type, setType] = useState('');
+    const [dailyPrice, setDailyPrice] = useState(null);
     const [image, setImage] = useState('');
-    const { token } = useToken();
-    const { id } = useId();
-    const { onCreate } = route.params;
 
-    const handleSignUp = async () => {
+    const { token } = useToken();
+    const { onCreate, idHotel } = route.params;
+
+    const handleCreateRoom = async () => {
         try {
             const url = getBaseURL();
-            const response = await fetch(`${url}/hotels/${id}`, {
+            console.log(`${url}/hotels/${idHotel}/rooms`);
+            const response = await fetch(`${url}/hotels/${idHotel}/rooms`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -26,11 +24,8 @@ function CreateHotelScreen({ route, navigation }) {
                 },
                 body: JSON.stringify({
                     name,
-                    address,
-                    telephone,
-                    email,
-                    state,
-                    country,
+                    type,
+                    dailyPrice,
                     image,
                 }),
             });
@@ -50,7 +45,7 @@ function CreateHotelScreen({ route, navigation }) {
 
     return (
         <ScrollView style={styles.container}>
-            <Text style={styles.title}>Cadastro de Hotel</Text>
+            <Text style={styles.title}>Cadastro de Quarto</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Nome"
@@ -60,39 +55,17 @@ function CreateHotelScreen({ route, navigation }) {
             />
             <TextInput
                 style={styles.input}
-                placeholder="Endereço"
+                placeholder="Tipo"
                 placeholderTextColor="#aaa"
-                value={address}
-                onChangeText={setAddress}
+                value={type}
+                onChangeText={setType}
             />
             <TextInput
                 style={styles.input}
-                placeholder="Telefone"
+                placeholder="Valor Diária"
                 placeholderTextColor="#aaa"
-                value={telephone}
-                onChangeText={setTelephone}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Email"
-                placeholderTextColor="#aaa"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="Estado"
-                placeholderTextColor="#aaa"
-                value={state}
-                onChangeText={setState}
-            />
-            <TextInput
-                style={styles.input}
-                placeholder="País"
-                placeholderTextColor="#aaa"
-                value={country}
-                onChangeText={setCountry}
+                value={dailyPrice}
+                onChangeText={setDailyPrice}
             />
             <TextInput
                 style={styles.input}
@@ -101,8 +74,8 @@ function CreateHotelScreen({ route, navigation }) {
                 value={image}
                 onChangeText={setImage}
             />
-            <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
-                <Text style={styles.signUpButtonText}>Cadastrar</Text>
+            <TouchableOpacity style={styles.createButton} onPress={handleCreateRoom}>
+                <Text style={styles.createButtonText}>Cadastrar</Text>
             </TouchableOpacity>
         </ScrollView>
     );
@@ -132,7 +105,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#333',
     },
-    signUpButton: {
+    createButton: {
         width: '100%',
         backgroundColor: '#3f51b5',
         paddingVertical: 16,
@@ -140,11 +113,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 24,
     },
-    signUpButtonText: {
+    createButtonText: {
         fontSize: 18,
         fontWeight: 'bold',
         color: '#fff',
     },
 });
 
-export default CreateHotelScreen;
+export default CreateRoomScreen;

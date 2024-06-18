@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { getBaseURL } from '../utils/url_config';
 import { useToken, useId } from '../utils/token_context';
 
-function CreateHotelScreen({ route, navigation }) {
+function EditMyHotelScreen({ route, navigation }) {
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [telephone, setTelephone] = useState('');
@@ -12,14 +12,13 @@ function CreateHotelScreen({ route, navigation }) {
     const [country, setCountry] = useState('');
     const [image, setImage] = useState('');
     const { token } = useToken();
-    const { id } = useId();
-    const { onCreate } = route.params;
+    const { idHotel } = route.params;
 
     const handleSignUp = async () => {
         try {
             const url = getBaseURL();
-            const response = await fetch(`${url}/hotels/${id}`, {
-                method: 'POST',
+            const response = await fetch(`${url}/hotels/${idHotel}`, {
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
@@ -36,11 +35,10 @@ function CreateHotelScreen({ route, navigation }) {
             });
 
             if (response.ok) {
-                Alert.alert('Sucesso', 'Cadastro realizado com sucesso');
-                if (onCreate) onCreate();
+                Alert.alert('Sucesso', 'Cadastro atualizado com sucesso');
                 navigation.goBack();
             } else {
-                Alert.alert('Erro', 'Falha no cadastro. Verifique os dados e tente novamente.');
+                Alert.alert('Erro', 'Falha na atualização. Verifique os dados e tente novamente.');
             }
         } catch (error) {
             console.error(error);
@@ -48,9 +46,34 @@ function CreateHotelScreen({ route, navigation }) {
         }
     };
 
+
+    const url = getBaseURL();
+
+    useEffect(() => {
+        fetch(`${url}/hotels/${idHotel}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setName(data.name);
+                setAddress(data.address);
+                setTelephone(data.telephone);
+                setEmail(data.email);
+                setState(data.state);
+                setCountry(data.country);
+                setImage(data.image);
+            })
+            .catch(error => {
+                console.error('Erro ao buscar os dados:', error);
+            });
+    }, []);
+
+
     return (
         <ScrollView style={styles.container}>
-            <Text style={styles.title}>Cadastro de Hotel</Text>
+            <Text style={styles.title}>Edição de Hotel</Text>
             <TextInput
                 style={styles.input}
                 placeholder="Nome"
@@ -102,7 +125,7 @@ function CreateHotelScreen({ route, navigation }) {
                 onChangeText={setImage}
             />
             <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
-                <Text style={styles.signUpButtonText}>Cadastrar</Text>
+                <Text style={styles.signUpButtonText}>Editar</Text>
             </TouchableOpacity>
         </ScrollView>
     );
@@ -147,4 +170,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CreateHotelScreen;
+export default EditMyHotelScreen;

@@ -31,8 +31,6 @@ function LoginScreen({ navigation }) {
                 setRole(data.role);
                 setId(data.id);
 
-                console.log(data.id);
-
                 navigation.replace('Main');
             } else {
                 Alert.alert('Erro', 'Usuário ou senha inválidos');
