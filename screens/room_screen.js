@@ -3,7 +3,7 @@ import {useToken} from '../utils/token_context';
 import {View, Text, StyleSheet, Image, ScrollView, TouchableOpacity, ActivityIndicator} from 'react-native';
 import {getBaseURL} from "../utils/url_config";
 
-function QuartosScreen({ route, navigation }) {
+function RoomScreen({ route, navigation }) {
     const { idHotel } = route.params;
 
     const [quartos, setQuartos] = useState([]);
@@ -96,4 +96,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default QuartosScreen;
+export default RoomScreen;

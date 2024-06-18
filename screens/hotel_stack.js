@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import HotelScreen from '../screens/hotel_screen';
-import QuartoScreen from './quartos_screen';
+import QuartoScreen from './room_screen';
 import CreateReserveScreen from '../screens/create_reserve_screen';
 
 const Stack = createStackNavigator();
