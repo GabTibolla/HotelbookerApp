@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

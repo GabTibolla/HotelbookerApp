@@ -42,16 +42,23 @@ function CreateReserveScreen({ route, navigation }) {
             },
             body: JSON.stringify(data),
         })
-            .then(response => response.json())
-            .then(result => {
-                if (result.ok) {
-                    Alert.alert("Sucesso", "A reserva foi realizada com sucesso!");
-                    navigation.goBack();
-                }else{
-                    Alert.alert("Error", result.message);
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao realizar a requisição.');
                 }
+                return response.json();
+            })
+            .then(result => {
+                const { hotel, room, checkInDate, checkOutDate } = result;
 
-
+                // Exibir mensagem
+                Alert.alert(
+                    "Reserva Confirmada",
+                    `Você reservou o quarto "${room.name}" no hotel "${hotel.name}".\n\nCheck-in: ${checkInDate}\nCheck-out: ${checkOutDate}`,
+                    [
+                        { text: 'OK', onPress: () => navigation.goBack() }
+                    ]
+                );
             })
             .catch(error => {
                 Alert.alert('Erro ao fazer a reserva. Tente novamente.', error.toString());

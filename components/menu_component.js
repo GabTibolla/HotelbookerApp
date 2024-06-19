@@ -8,12 +8,13 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useRole} from "../utils/token_context";
 import  VectorIcons  from 'react-native-vector-icons/FontAwesome5';
 import MyHotelsStack from "../screens/my_hotels_stack";
+import HomeAdmScreen from "../screens/home_adm_screen";
 
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
     const { role } = useRole();
-
+    console.log(role);
 
     return (
         <Tab.Navigator>
@@ -30,7 +31,7 @@ function MyTabs() {
             />):
                 <Tab.Screen
                     name="Estatísicas"
-                    component={HomeScreen}
+                    component={HomeAdmScreen}
                     options={{
                         tabBarLabel: 'Estatísticas',
                         tabBarIcon: ({ color, size }) => (
