@@ -60,7 +60,6 @@ const HomeAdmScreen = ({ navigation }) => {
                         },
                     });
                     const data = await response.json();
-                    console.log(data);
                     setStatistics(data);
                     setLoading(false);
 
@@ -112,7 +111,7 @@ const HomeAdmScreen = ({ navigation }) => {
     return (
         <ScrollView>
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20 }}>
-                <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 20 }}>Estatísticas do Usuário</Text>
+                <Text style={{ fontSize: 24, fontWeight: 'bold', marginBottom: 20 }}>Estatísticas dos hotéis</Text>
                 <View style={{ alignItems: 'center', marginBottom: 20 }}>
                     <Text>Total de Hotéis: {statistics.totalHotels ?? 'Dados não disponíveis'}</Text>
                     <Text>Total de Quartos: {statistics.totalRooms ?? 'Dados não disponíveis'}</Text>
@@ -196,21 +195,21 @@ const HomeAdmScreen = ({ navigation }) => {
                 <PieChart
                     data={[
                         {
-                            name: 'Hotéis',
+                            name: statistics.totalHotels == 1 ? "Hotel" : 'Hotéis',
                             population: statistics.totalHotels ?? 0,
                             color: '#ff6384',
                             legendFontColor: '#7F7F7F',
                             legendFontSize: 15
                         },
                         {
-                            name: 'Quartos',
+                            name: statistics.totalRooms == 1 ? "Quarto" : 'Quartos',
                             population: statistics.totalRooms ?? 0,
                             color: '#36a2eb',
                             legendFontColor: '#7F7F7F',
                             legendFontSize: 15
                         },
                         {
-                            name: 'Reservas',
+                            name: statistics.totalReservations == 1 ? "Reserva" :  'Reservas',
                             population: statistics.totalReservations ?? 0,
                             color: '#ffcd56',
                             legendFontColor: '#7F7F7F',

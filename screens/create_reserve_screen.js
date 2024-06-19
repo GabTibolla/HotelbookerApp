@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, ScrollView, Alert, TouchableOpacity, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {useToken} from '../utils/token_context';
+import {useToken, useId} from '../utils/token_context';
 import {getBaseURL} from "../utils/url_config";
 
 function CreateReserveScreen({ route, navigation }) {
@@ -16,6 +16,7 @@ function CreateReserveScreen({ route, navigation }) {
     const [showCheckInPicker, setShowCheckInPicker] = useState(false);
     const [showCheckOutPicker, setShowCheckOutPicker] = useState(false);
     const { token } = useToken();
+    const {id} = useId();
 
     const handleReserve = () => {
         const data = {
@@ -32,8 +33,7 @@ function CreateReserveScreen({ route, navigation }) {
         }
 
         const url = getBaseURL();
-
-        fetch(`${url}/hotels/${idHotel}/rooms/${idQuarto}/reserve`, {
+        fetch(`${url}/hotels/${idHotel}/rooms/${idQuarto}/reserve/${id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

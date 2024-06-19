@@ -14,7 +14,6 @@ const Tab = createBottomTabNavigator();
 
 function MyTabs() {
     const { role } = useRole();
-    console.log(role);
 
     return (
         <Tab.Navigator>

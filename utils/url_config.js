@@ -1,6 +1,3 @@
-import axios from 'axios';
-import { Platform } from 'react-native';
-
 export const getBaseURL = () => {
-    return 'http://192.168.1.9:8080';
+    return 'http://172.30.129.218:8080';
 };
