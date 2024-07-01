@@ -51,10 +51,13 @@ Este aplicativo ainda está em desenvolvimento. Novas funcionalidades e melhoria
 
 ## Contribuição
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests no GitHub.
-
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests no GitHub
 
 Desenvolvido por [Gabriel Matheus Tibolla](https://github.com/gabtibolla).
+
+## Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE).
 
 ---
 
@@ -114,3 +117,9 @@ This application is still under development. New features and improvements will 
 Contributions are welcome! Feel free to open issues and pull requests on GitHub.
 
 Developed by [Gabriel Matheus Tibolla](https://github.com/GabTibolla).
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
