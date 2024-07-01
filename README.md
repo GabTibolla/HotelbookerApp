@@ -2,7 +2,7 @@
 
 ## Descrição
 
-HotelBooker é um aplicativo móvel desenvolvido em React Native, que oferece funcionalidades tanto para os donos de hotéis quanto para os clientes. Este app permite uma gestão eficiente de hotéis, quartos e reservas, utilizando a API fornecida no repositório [hotelbooker](https://github.com/gu1lherme10-dev/hotelbooker).
+HotelBooker é um aplicativo móvel desenvolvido em React Native com Expo, que oferece funcionalidades tanto para os donos de hotéis quanto para os clientes. Este app permite uma gestão eficiente de hotéis, quartos e reservas, utilizando a API fornecida no repositório [hotelbooker](https://github.com/gu1lherme10-dev/hotelbooker).
 
 ## Funcionalidades
 
@@ -46,7 +46,7 @@ Este aplicativo ainda está em desenvolvimento. Novas funcionalidades e melhoria
 
 5. Inicie o aplicativo:
     ```bash
-    npm start
+    npx expo start
     ```
 
 ## Contribuição
@@ -62,7 +62,7 @@ Desenvolvido por [Gabriel Matheus Tibolla](https://github.com/gabtibolla).
 
 ## Description
 
-HotelBooker is a mobile application developed in React Native, offering functionalities for both hotel owners and customers. This app allows efficient management of hotels, rooms, and bookings, using the API provided in the [hotelbooker](https://github.com/gu1lherme10-dev/hotelbooker) repository.
+HotelBooker is a mobile application developed in React Native with Expo, offering functionalities for both hotel owners and customers. This app allows efficient management of hotels, rooms, and bookings, using the API provided in the [hotelbooker](https://github.com/gu1lherme10-dev/hotelbooker) repository.
 
 ## Features
 
@@ -106,12 +106,11 @@ This application is still under development. New features and improvements will 
 
 5. Start the application:
     ```bash
-    npm start
+    npx expo start
     ```
 
 ## Contribution
 
 Contributions are welcome! Feel free to open issues and pull requests on GitHub.
----
 
 Developed by [Gabriel Matheus Tibolla](https://github.com/GabTibolla).
